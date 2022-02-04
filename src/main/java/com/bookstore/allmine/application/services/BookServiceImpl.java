@@ -24,22 +24,22 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book updateBook(Book book) {
-        return null;
+        return bookRepository.save(book);
     }
 
     @Override
-    public void delete(Long id) {
-
+    public void delete(UUID id) {
+        bookRepository.delete(id);
     }
 
     @Override
     public List<Book> findAll(PageInfo pageInfo) {
-        return null;
+        return bookRepository.findAll(pageInfo);
     }
 
     @Override
-    public Optional<Book> findById(UUID bookId) {
-        return Optional.empty();
+    public Optional<Book> findById(UUID id) {
+        return bookRepository.findById(id);
     }
 
 }

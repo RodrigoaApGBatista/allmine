@@ -41,7 +41,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Book> delete(@PathVariable("id") UUID id) {
         bookServicePort.delete(id);
         return ResponseEntity.ok().build();
     }
