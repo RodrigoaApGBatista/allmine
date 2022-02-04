@@ -10,10 +10,12 @@ public class BookDto {
 
     @NotBlank
     private String id;
+
     @NotBlank
     private String title;
-    @NotBlank
+
     private String id_user;
+
     @NotBlank
     private BigDecimal price;
 

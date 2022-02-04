@@ -2,9 +2,14 @@ package com.bookstore.allmine.adapters.inbound;
 
 import com.bookstore.allmine.adapters.dtos.BookDto;
 import com.bookstore.allmine.application.domain.Book;
+import com.bookstore.allmine.application.domain.PageInfo;
 import com.bookstore.allmine.application.ports.BookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,48 +20,48 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/book")
 public class BookController {
 
     @Autowired
     BookService bookServicePort;
 
-    @PostMapping("/publish-book")
-    public ResponseEntity<Book> sendingBook(@RequestBody @Valid BookDto bookDto) {
+    @PostMapping(produces = {"application/json"}, consumes = {"application/json"})
+    public ResponseEntity<Book> create(@RequestBody @Valid BookDto bookDto) {
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
         return new ResponseEntity<>(bookServicePort.createBook(book), HttpStatus.CREATED);
     }
 
-    @PostMapping("/edit-book")
-    public ResponseEntity<Book> sendingBook(@RequestBody @Valid BookDto bookDto) {
+    @PutMapping(produces = {"application/json"}, consumes = {"application/json"})
+    public ResponseEntity<Book> update(@RequestBody @Valid BookDto bookDto) {
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
-        return new ResponseEntity<>(bookServicePort.updateBook(book), HttpStatus.CREATED);
+        return new ResponseEntity<>(bookServicePort.updateBook(book), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-book")
-    public ResponseEntity<Book> sendingBook(@RequestBody @Valid BookDto bookDto) {
-        Book book = new Book();
-        BeanUtils.copyProperties(bookDto, book);
-        return new ResponseEntity<>(bookServicePort.deleteBook(book), HttpStatus.CREATED);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Book> delete(@PathVariable("id") Long id) {
+        bookServicePort.delete(id);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/books")
-    public ResponseEntity<Page<Book>> getAllBooks(@PageableDefault(page = 0, size = 5, sort = "bookId", direction = Sort.Direction.DESC) Pageable pageable){
+    @GetMapping(produces = {"application/json"})
+    public ResponseEntity<?> findAll(@PageableDefault(page = 0,
+            size = 5,
+            sort = "title",
+            direction = Sort.Direction.DESC) Pageable pageable){
         PageInfo pageInfo = new PageInfo();
         BeanUtils.copyProperties(pageable, pageInfo);
         List<Book> bookList = bookServicePort.findAll(pageInfo);
         return new ResponseEntity<>(new PageImpl<Book>(bookList, pageable, bookList.size()), HttpStatus.OK);
     }
 
-    @GetMapping("/books/{bookId}")
-    public ResponseEntity<Object> getOneBook(@PathVariable(value="bookId") UUID bookId){
+    @GetMapping(value = "/{id}", produces = {"application/json"})
+    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID bookId) {
         Optional<Book> bookModelOptional = bookServicePort.findById(bookId);
-        if(!bookModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
-        }else {
-            return ResponseEntity.status(HttpStatus.OK).body(bookModelOptional.get());
-        }
-
+        return bookModelOptional.<ResponseEntity<Object>>map(book -> ResponseEntity.status(HttpStatus.OK).body(book))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found."));
+    }
 
 }
