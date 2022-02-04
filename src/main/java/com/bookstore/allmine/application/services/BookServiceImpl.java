@@ -2,6 +2,7 @@ package com.bookstore.allmine.application.services;
 
 import com.bookstore.allmine.application.domain.Book;
 import com.bookstore.allmine.application.domain.PageInfo;
+import com.bookstore.allmine.application.ports.BookRepository;
 import com.bookstore.allmine.application.ports.BookService;
 
 import java.util.List;
@@ -10,9 +11,15 @@ import java.util.UUID;
 
 public class BookServiceImpl implements BookService {
 
+    private final BookRepository bookRepository;
+
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
     @Override
     public Book createBook(Book book) {
-        return null;
+        return bookRepository.save(book);
     }
 
     @Override
