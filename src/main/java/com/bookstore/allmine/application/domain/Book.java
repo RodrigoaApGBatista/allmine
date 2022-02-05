@@ -12,5 +12,4 @@ public class Book {
     private String title;
     private String id_user;
     private BigDecimal price;
-
 }

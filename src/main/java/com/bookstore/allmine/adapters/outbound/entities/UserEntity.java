@@ -1,6 +1,9 @@
 package com.bookstore.allmine.adapters.outbound.entities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -16,8 +19,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "BOOK")
-public class BookEntity implements Serializable {
+@Table(name = "USER")
+public class UserEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -25,22 +28,19 @@ public class BookEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @Column(name = "author")
+    @Column(name = "book")
     @ToString.Exclude
-    private List<UserEntity> author;
-
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private List<BookEntity> book;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BookEntity that = (BookEntity) o;
+        UserEntity that = (UserEntity) o;
         return id != null && Objects.equals(id, that.id);
     }
 
