@@ -11,7 +11,7 @@ import java.util.List;
 public class BookDto {
 
     @NotBlank
-    private String id;
+    private Long id;
 
     @NotBlank
     private String title;
