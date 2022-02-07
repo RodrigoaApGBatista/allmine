@@ -12,9 +12,9 @@ public interface BookService {
 
     Book updateBook(Book book);
 
-    void delete(UUID id);
+    void delete(Long id);
 
     List<Book> findAll(PageInfo pageInfo);
 
-    Optional<Book> findById(UUID id);
+    Optional<Book> findById(Long id);
 }

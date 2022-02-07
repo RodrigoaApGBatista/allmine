@@ -7,7 +7,6 @@ import com.bookstore.allmine.application.ports.BookService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class BookServiceImpl implements BookService {
 
@@ -28,7 +27,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         bookRepository.delete(id);
     }
 
@@ -38,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findById(UUID id) {
+    public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
     }
 

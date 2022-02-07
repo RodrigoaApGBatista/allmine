@@ -8,7 +8,6 @@ import com.bookstore.allmine.application.ports.OrderService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -29,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         orderRepository.delete(id);
     }
 
@@ -39,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> findById(UUID id) {
+    public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }
 

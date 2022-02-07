@@ -11,8 +11,8 @@ import java.util.UUID;
 public interface OrderRepository {
 
     Order save(Order order);
-    void delete(UUID id);
+    void delete(Long id);
     List<Order> findAll(PageInfo pageInfo);
-    Optional<Order> findById(UUID id);
+    Optional<Order> findById(Long id);
 
 }

@@ -15,7 +15,7 @@ public class UserDto {
     public class Order {
 
         @NotBlank
-        private UUID id;
+        private Long id;
 
         @NotBlank
         private User name;

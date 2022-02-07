@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
@@ -41,7 +40,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Order> delete(@PathVariable("id") UUID id) {
+    public ResponseEntity<Order> delete(@PathVariable("id") Long id) {
         orderServicePort.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -58,7 +57,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json"})
-    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID orderId) {
+    public ResponseEntity<Object> findById(@PathVariable(value="id") Long orderId) {
         Optional<Order> orderModelOptional = orderServicePort.findById(orderId);
         return orderModelOptional.<ResponseEntity<Object>>map(order -> ResponseEntity.status(HttpStatus.OK).body(order))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found."));

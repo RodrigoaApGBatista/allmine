@@ -12,9 +12,9 @@ public interface UserService {
 
     User updateUser(User user);
 
-    void delete(UUID id);
+    void delete(Long id);
 
     List<User> findAll(PageInfo pageInfo);
 
-    Optional<User> findById(UUID id);
+    Optional<User> findById(Long id);
 }

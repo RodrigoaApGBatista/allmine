@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/book")
@@ -41,7 +40,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> delete(@PathVariable("id") UUID id) {
+    public ResponseEntity<Book> delete(@PathVariable("id") Long id) {
         bookServicePort.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -58,7 +57,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json"})
-    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID bookId) {
+    public ResponseEntity<Object> findById(@PathVariable(value="id") Long bookId) {
         Optional<Book> bookModelOptional = bookServicePort.findById(bookId);
         return bookModelOptional.<ResponseEntity<Object>>map(book -> ResponseEntity.status(HttpStatus.OK).body(book))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found."));

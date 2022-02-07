@@ -10,8 +10,8 @@ import java.util.UUID;
 public interface UserRepository {
 
     User save(User user);
-    void delete(UUID id);
+    void delete(Long id);
     List<User> findAll(PageInfo pageInfo);
-    Optional<User> findById(UUID id);
+    Optional<User> findById(Long id);
 
 }

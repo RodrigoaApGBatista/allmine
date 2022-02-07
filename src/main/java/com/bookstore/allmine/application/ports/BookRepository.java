@@ -10,8 +10,8 @@ import java.util.UUID;
 public interface BookRepository {
 
     Book save(Book book);
-    void delete(UUID id);
+    void delete(Long id);
     List<Book> findAll(PageInfo pageInfo);
-    Optional<Book> findById(UUID id);
+    Optional<Book> findById(Long id);
 
 }

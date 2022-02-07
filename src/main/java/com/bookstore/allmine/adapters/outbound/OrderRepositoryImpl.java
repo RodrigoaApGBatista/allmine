@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Primary
@@ -34,7 +33,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
 
     }
 
@@ -44,7 +43,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Optional<Order> findById(UUID id) {
+    public Optional<Order> findById(Long id) {
         return Optional.empty();
     }
 

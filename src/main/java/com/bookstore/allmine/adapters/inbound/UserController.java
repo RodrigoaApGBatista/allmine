@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -41,7 +40,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@PathVariable("id") UUID id) {
+    public ResponseEntity<User> delete(@PathVariable("id") Long id) {
         userServicePort.delete(id);
         return ResponseEntity.ok().build();
     }
@@ -58,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json"})
-    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID userId) {
+    public ResponseEntity<Object> findById(@PathVariable(value="id") Long userId) {
         Optional<User> userModelOptional = userServicePort.findById(userId);
         return userModelOptional.<ResponseEntity<Object>>map(user -> ResponseEntity.status(HttpStatus.OK).body(user))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));

@@ -1,7 +1,6 @@
 package com.bookstore.allmine.adapters.outbound;
 
 import com.bookstore.allmine.adapters.outbound.entities.UserEntity;
-import com.bookstore.allmine.application.domain.Book;
 import com.bookstore.allmine.application.domain.PageInfo;
 import com.bookstore.allmine.application.domain.User;
 import com.bookstore.allmine.application.ports.UserRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Primary
@@ -34,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
 
     }
 
@@ -44,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(UUID id) {
+    public Optional<User> findById(Long id) {
         return Optional.empty();
     }
 

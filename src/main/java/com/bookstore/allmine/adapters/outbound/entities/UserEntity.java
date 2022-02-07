@@ -7,12 +7,9 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -21,12 +18,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Table(name = "USER")
 public class UserEntity implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
 
     @Column(name = "NAME", nullable = false)
     private String name;
