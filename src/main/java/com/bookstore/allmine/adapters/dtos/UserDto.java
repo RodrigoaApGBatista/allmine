@@ -6,19 +6,23 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-public class BookDto {
+public class UserDto {
 
-    @NotBlank
-    private String id;
+    @Data
+    public class Order {
 
-    @NotBlank
-    private String title;
+        @NotBlank
+        private UUID id;
 
-    private List<User> userAuthor;
+        @NotBlank
+        private User name;
 
-    @NotBlank
-    private BigDecimal price;
+
+        private List<BookDto> books;
+    }
+
 
 }

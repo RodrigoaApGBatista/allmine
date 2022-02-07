@@ -25,15 +25,15 @@ public class BookEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @Column(name = "author")
+    @Column(name = "USER_AUTHOR")
     @ToString.Exclude
-    private List<UserEntity> author;
+    private List<UserEntity> userAuthor;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
     @Override

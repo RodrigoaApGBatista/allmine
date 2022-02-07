@@ -1,9 +1,9 @@
 package com.bookstore.allmine.adapters.inbound;
 
-import com.bookstore.allmine.adapters.dtos.BookDto;
-import com.bookstore.allmine.application.domain.Book;
+import com.bookstore.allmine.adapters.dtos.UserDto;
 import com.bookstore.allmine.application.domain.PageInfo;
-import com.bookstore.allmine.application.ports.BookService;
+import com.bookstore.allmine.application.domain.User;
+import com.bookstore.allmine.application.ports.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
@@ -20,48 +20,48 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    BookService bookServicePort;
+    UserService userServicePort;
 
     @PostMapping(produces = {"application/json"}, consumes = {"application/json"})
-    public ResponseEntity<Book> create(@RequestBody @Valid BookDto bookDto) {
-        Book book = new Book();
-        BeanUtils.copyProperties(bookDto, book);
-        return new ResponseEntity<>(bookServicePort.createBook(book), HttpStatus.CREATED);
+    public ResponseEntity<User> create(@RequestBody @Valid UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        return new ResponseEntity<>(userServicePort.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping(produces = {"application/json"}, consumes = {"application/json"})
-    public ResponseEntity<Book> update(@RequestBody @Valid BookDto bookDto) {
-        Book book = new Book();
-        BeanUtils.copyProperties(bookDto, book);
-        return new ResponseEntity<>(bookServicePort.updateBook(book), HttpStatus.OK);
+    public ResponseEntity<User> update(@RequestBody @Valid UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+        return new ResponseEntity<>(userServicePort.updateUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> delete(@PathVariable("id") UUID id) {
-        bookServicePort.delete(id);
+    public ResponseEntity<User> delete(@PathVariable("id") UUID id) {
+        userServicePort.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(produces = {"application/json"})
     public ResponseEntity<?> findAll(@PageableDefault(page = 0,
             size = 5,
-            sort = "title",
+            sort = "name",
             direction = Sort.Direction.DESC) Pageable pageable){
         PageInfo pageInfo = new PageInfo();
         BeanUtils.copyProperties(pageable, pageInfo);
-        List<Book> bookList = bookServicePort.findAll(pageInfo);
-        return new ResponseEntity<>(new PageImpl<Book>(bookList, pageable, bookList.size()), HttpStatus.OK);
+        List<User> userList = userServicePort.findAll(pageInfo);
+        return new ResponseEntity<>(new PageImpl<User>(userList, pageable, userList.size()), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = {"application/json"})
-    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID bookId) {
-        Optional<Book> bookModelOptional = bookServicePort.findById(bookId);
-        return bookModelOptional.<ResponseEntity<Object>>map(book -> ResponseEntity.status(HttpStatus.OK).body(book))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found."));
+    public ResponseEntity<Object> findById(@PathVariable(value="id") UUID userId) {
+        Optional<User> userModelOptional = userServicePort.findById(userId);
+        return userModelOptional.<ResponseEntity<Object>>map(user -> ResponseEntity.status(HttpStatus.OK).body(user))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found."));
     }
 
 }

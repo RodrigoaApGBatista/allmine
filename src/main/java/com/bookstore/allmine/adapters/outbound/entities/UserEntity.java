@@ -28,13 +28,13 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @Column(name = "book")
+    @Column(name = "BOOKS")
     @ToString.Exclude
-    private List<BookEntity> book;
+    private List<BookEntity> books;
 
     @Override
     public boolean equals(Object o) {

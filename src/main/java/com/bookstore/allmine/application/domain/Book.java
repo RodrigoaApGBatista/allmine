@@ -10,6 +10,6 @@ public class Book {
 
     private UUID id;
     private String title;
-    private String id_user;
+    private User userAuthor;
     private BigDecimal price;
 }
